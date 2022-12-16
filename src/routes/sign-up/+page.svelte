@@ -1,6 +1,7 @@
 <script>
   import supabase from "$lib/supabaseClient";
   import Toaster from "../../components/Toaster.svelte";
+  import { isUser } from "$lib/stores";
   let toastDetails = {
     show: false,
     msg: "",
@@ -39,6 +40,7 @@
           msg: "",
           type: "",
         };
+        window.location.href = "/sign-in";
       }, 4000);
     }
   };

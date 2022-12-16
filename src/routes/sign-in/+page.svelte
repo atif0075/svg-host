@@ -1,6 +1,15 @@
 <script>
   import supabase from "$lib/supabaseClient";
   import Toaster from "../../components/Toaster.svelte";
+  import { isUser } from "$lib/stores";
+  import { onMount } from "svelte";
+  onMount(() => {
+    isUser.subscribe((value) => {
+      if (value) {
+        window.location.href = "/";
+      }
+    });
+  });
   let email = "";
   let password = "";
   let toastDetails = {
@@ -40,6 +49,8 @@
           msg: "",
           type: "",
         };
+        isUser.set(true);
+        window.location.href = "/";
       }, 2000);
     }
   };

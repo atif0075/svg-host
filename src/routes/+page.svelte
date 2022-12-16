@@ -1,9 +1,13 @@
 <script>
   import Dropzone from "../layouts/Dropzone.svelte";
-  import localStore from "../stores/store";
-  // get name from store
-  const { name } = $localStore;
-  console.log(name);
+  import { isSvgPublic } from "$lib/stores";
+  import { onMount } from "svelte";
+  let checked = false;
+  onMount(() => {
+    isSvgPublic.subscribe((value) => {
+      checked = value;
+    });
+  });
 </script>
 
 <main>
@@ -13,7 +17,15 @@
     <div class="w-full flex justify-end items-center px-4 py-5">
       <h1 class=" px-2 ">Make it public</h1>
       <label for="AcceptConditions" class="relative h-6 w-12 cursor-pointer">
-        <input type="checkbox" id="AcceptConditions" class="peer sr-only" />
+        <input
+          bind:checked
+          on:change={() => {
+            isSvgPublic.set(checked);
+          }}
+          type="checkbox"
+          id="AcceptConditions"
+          class="peer sr-only"
+        />
         <span
           class="absolute inset-0 rounded-full bg-zinc-700 transition peer-checked:bg-rose-500"
         />
