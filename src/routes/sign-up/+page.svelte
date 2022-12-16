@@ -1,8 +1,11 @@
 <script>
   import supabase from "$lib/supabaseClient";
+  import Toaster from "../../components/Toaster.svelte";
+  let show = false;
+  let msg = "";
   let email = "";
   let password = "";
-  const submit = async () => { 
+  const submit = async () => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -11,16 +14,6 @@
       console.log(error);
     } else {
       console.log(data);
-      // const { data, error } = await supabase.auth.verifyOtp({
-      //   email,
-      //   token,
-      //   type: "signup",
-      // });
-      // if (error) {
-      //   console.log(error);
-      // } else {
-      //   console.log(data);
-      // }
     }
   };
 </script>
@@ -32,6 +25,7 @@
         Sign up to create your account
       </h1>
     </div>
+    <Toaster {show} {msg} />
 
     <div class="mx-auto mt-8 mb-0 max-w-md space-y-4">
       <div>
