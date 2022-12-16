@@ -2,8 +2,7 @@
   import supabase from "$lib/supabaseClient";
   let email = "";
   let password = "";
-  const submit = async () => {
-    console.log(import.meta.env.VITE_PUBLIC_SUPABASE_URL);
+  const submit = async () => { 
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
