@@ -75,7 +75,7 @@
               >
                 <svg
                   viewBox="0 0 16 16"
-                  class="w-5 h-5"
+                  class="w-6 h-6"
                   fill="currentColor"
                   aria-hidden="true"
                   ><path
