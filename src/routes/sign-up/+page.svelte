@@ -33,7 +33,13 @@
         show: true,
         msg: "You have successfully signed up.Please check your email to verify your account.",
       };
-      setTimeout(() => {}, 4000);
+      setTimeout(() => {
+        toastDetails = {
+          show: false,
+          msg: "",
+          type: "",
+        };
+      }, 4000);
     }
   };
 </script>

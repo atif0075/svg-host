@@ -3,8 +3,11 @@
   import Toaster from "../../components/Toaster.svelte";
   let email = "";
   let password = "";
-  let show = false;
-  let msg = "";
+  let toastDetails = {
+    show: false,
+    msg: "",
+    type: "",
+  };
   const singin = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -13,15 +16,36 @@
     if (error) {
       console.log(error);
       // do a proper error handling
-      show = true;
-      msg = error.message;
+      toastDetails = {
+        type: "error",
+        show: true,
+        msg: error.message,
+      };
+      setTimeout(() => {
+        toastDetails = {
+          show: false,
+          msg: "",
+          type: "",
+        };
+      }, 4000);
     } else {
-      console.log(data);
+      toastDetails = {
+        type: "success",
+        show: true,
+        msg: "You have successfully signed in.",
+      };
+      setTimeout(() => {
+        toastDetails = {
+          show: false,
+          msg: "",
+          type: "",
+        };
+      }, 2000);
     }
   };
 </script>
 
-<Toaster {show} {msg} />
+<Toaster {toastDetails} />
 <main class=" min-h-screen ">
   <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-lg text-center">
