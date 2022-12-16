@@ -1,10 +1,12 @@
 <script>
   import supabase from "$lib/supabaseClient";
   import Toaster from "../../components/Toaster.svelte";
-  let show = false;
-  let msg = "";
+  let toastDetails = {
+    show: false,
+    msg: "",
+    type: "",
+  };
   let email = "";
-  let type = "";
   let full_name = "";
   let password = "";
   const submit = async () => {
@@ -13,23 +15,25 @@
       password,
     });
     if (error) {
-      show = true;
-      msg = error.message;
-      type = "error";
+      toastDetails = {
+        type: "error",
+        show: true,
+        msg: error.message,
+      };
       setTimeout(() => {
-        show = false;
-        msg = "";
-        type = "";
-      }, 2000);
-    } else {
-      type = "success";
-      show = true;
-      msg = "Check your email for the confirmation link";
-      setTimeout(() => {
-        show = false;
-        msg = "";
-        type = "";
+        toastDetails = {
+          show: false,
+          msg: "",
+          type: "",
+        };
       }, 4000);
+    } else {
+      toastDetails = {
+        type: "success",
+        show: true,
+        msg: "You have successfully signed up.Please check your email to verify your account.",
+      };
+      setTimeout(() => {}, 4000);
     }
   };
 </script>
@@ -41,7 +45,7 @@
         Sign up to create your account
       </h1>
     </div>
-    <Toaster {show} {msg} {type} />
+    <Toaster {toastDetails} />
 
     <div class="mx-auto mt-8 mb-0 max-w-md space-y-4">
       <div>
