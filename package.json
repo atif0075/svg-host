@@ -19,7 +19,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/auth-helpers-sveltekit": "^0.8.6",
 		"@supabase/supabase-js": "^2.2.0",
 		"svelte-file-dropzone": "^1.0.0"
 	}
