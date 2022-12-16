@@ -1,5 +1,9 @@
 <script>
   import Dropzone from "../layouts/Dropzone.svelte";
+  import localStore from "../stores/store";
+  // get name from store
+  const { name } = $localStore;
+  console.log(name);
 </script>
 
 <main>
