@@ -1,10 +1,14 @@
 <script>
   import { page } from "$app/stores";
   import { isUser } from "../lib/stores";
+  import { beforeUpdate } from "svelte";
   let is_user = false;
-  isUser.subscribe((value) => {
-    is_user = value;
+  beforeUpdate(() => {
+    isUser.subscribe((value) => {
+      is_user = value;
+    });
   });
+
   let path;
   function getPath(currentPath) {
     path = currentPath;
@@ -22,6 +26,7 @@
     >
       <div class="flex items-center">
         <button type="button" class="p-2 sm:mr-4 lg:hidden">
+          <span class=" sr-only">Menu</span>
           <svg
             class="h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +44,8 @@
         </button>
 
         <a href="/" class="text-white font-semibold">
-          <span class="inline-block px-4 py-2.5 rounded-lg bg-rose-500"
+          <span
+            class="inline-block px-4 py-2.5 rounded-lg text-zinc-100 bg-zinc-900"
             >Svg Hoster</span
           >
         </a>
@@ -73,6 +79,7 @@
             <span>
               <a
                 rel="noreferrer"
+                aria-label="Github"
                 target="_blank"
                 href="https://github.com/atif0075/svg-hoster"
                 class="block border-b-4 border-transparent p-6 text-zinc-500 hover:border-rose-700"

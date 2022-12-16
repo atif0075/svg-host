@@ -56,6 +56,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>Svg Hoster - Signin</title>
+</svelte:head>
+
 <Toaster {toastDetails} />
 <main class=" min-h-screen ">
   <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -101,6 +105,7 @@
         </p>
 
         <button
+          type="button"
           on:click={singin}
           class="ml-3 inline-block rounded-lg bg-rose-500 px-5 py-3 text-sm font-medium text-white"
         >

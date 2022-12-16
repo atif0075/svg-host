@@ -10,6 +10,9 @@
   });
 </script>
 
+<svelte:head>
+  <title>Svg Hoster - Home</title>
+</svelte:head>
 <main>
   <main
     class=" flex flex-col justify-center text-white items-center w-full min-h-screen mx-auto container"
