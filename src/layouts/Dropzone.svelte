@@ -1,25 +1,22 @@
 <script>
   import Dropzone from "svelte-file-dropzone";
   let files = {
-    accepted: [],
+    accepted: [
+      {
+        name: "test.svg",
+        type: "image/svg+xml",
+        size: 123,
+        lastModified: 123,
+        webkitRelativePath: "",
+      },
+    ],
     rejected: [],
   };
-
   function handleFilesSelect(e) {
     const { acceptedFiles, fileRejections } = e.detail;
     files.accepted = [...files.accepted, ...acceptedFiles];
     files.rejected = [...files.rejected, ...fileRejections];
   }
-  import PocketBase from "pocketbase";
-
-  const pb = new PocketBase("http://127.0.0.1:8090");
-  const authData = pb
-    .collection("users")
-    .authWithPassword("email", "pass");
-  console.log(pb.authStore.isValid);
-  console.log(pb.authStore.token);
-  console.log(pb.authStore.model.id);
-  pb.authStore.clear();
 </script>
 
 <main class="container mx-auto flex flex-col justify-center items-center ">

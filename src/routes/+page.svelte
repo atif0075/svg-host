@@ -11,7 +11,7 @@
       <label for="AcceptConditions" class="relative h-6 w-12 cursor-pointer">
         <input type="checkbox" id="AcceptConditions" class="peer sr-only" />
         <span
-          class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-rose-500"
+          class="absolute inset-0 rounded-full bg-zinc-700 transition peer-checked:bg-rose-500"
         />
         <span
           class="absolute inset-0 m-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-6"

@@ -19,7 +19,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pocketbase": "^0.8.4",
+		"@supabase/supabase-js": "^2.2.0",
 		"svelte-file-dropzone": "^1.0.0"
 	}
 }
