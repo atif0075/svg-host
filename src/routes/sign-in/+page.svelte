@@ -1,7 +1,10 @@
 <script>
   import supabase from "$lib/supabaseClient";
+  import Toaster from "../../components/Toaster.svelte";
   let email = "";
   let password = "";
+  let show = false;
+  let msg = "";
   const singin = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -9,12 +12,16 @@
     });
     if (error) {
       console.log(error);
+      // do a proper error handling
+      show = true;
+      msg = error.message;
     } else {
       console.log(data);
     }
   };
 </script>
 
+<Toaster {show} {msg} />
 <main class=" min-h-screen ">
   <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-lg text-center">
@@ -31,7 +38,7 @@
           <input
             type="email"
             bind:value={email}
-            class="w-full rounded-lg outline-none border-gray-200 p-4 pr-12 text-sm shadow-sm"
+            class="w-full bg-zinc-800 text-gray-100 rounded-lg outline-none border-gray-200 p-4 pr-12 text-sm shadow-sm"
             placeholder="Enter email"
           />
         </div>
@@ -43,7 +50,7 @@
           <input
             type="password"
             bind:value={password}
-            class="w-full rounded-lg border-gray-200 outline-none p-4 pr-12 text-sm shadow-sm"
+            class="w-full bg-zinc-800 text-gray-100 rounded-lg border-gray-200 outline-none p-4 pr-12 text-sm shadow-sm"
             placeholder="Enter password"
           />
         </div>

@@ -4,6 +4,8 @@
   let show = false;
   let msg = "";
   let email = "";
+  let type = "";
+  let full_name = "";
   let password = "";
   const submit = async () => {
     const { data, error } = await supabase.auth.signUp({
@@ -11,9 +13,23 @@
       password,
     });
     if (error) {
-      console.log(error);
+      show = true;
+      msg = error.message;
+      type = "error";
+      setTimeout(() => {
+        show = false;
+        msg = "";
+        type = "";
+      }, 2000);
     } else {
-      console.log(data);
+      type = "success";
+      show = true;
+      msg = "Check your email for the confirmation link";
+      setTimeout(() => {
+        show = false;
+        msg = "";
+        type = "";
+      }, 4000);
     }
   };
 </script>
@@ -25,9 +41,21 @@
         Sign up to create your account
       </h1>
     </div>
-    <Toaster {show} {msg} />
+    <Toaster {show} {msg} {type} />
 
     <div class="mx-auto mt-8 mb-0 max-w-md space-y-4">
+      <div>
+        <label for="email" class="sr-only">Name</label>
+
+        <div class="relative">
+          <input
+            type="text"
+            bind:value={full_name}
+            class="w-full bg-zinc-800 text-gray-100 rounded-lg outline-none border-gray-200 p-4 pr-12 text-sm shadow-sm"
+            placeholder="Enter name"
+          />
+        </div>
+      </div>
       <div>
         <label for="email" class="sr-only">Email</label>
 
@@ -35,19 +63,18 @@
           <input
             type="email"
             bind:value={email}
-            class="w-full rounded-lg outline-none border-gray-200 p-4 pr-12 text-sm shadow-sm"
+            class="w-full bg-zinc-800 text-gray-100 rounded-lg outline-none border-gray-200 p-4 pr-12 text-sm shadow-sm"
             placeholder="Enter email"
           />
         </div>
       </div>
-
       <div>
         <label for="password" class="sr-only">Password</label>
         <div class="relative">
           <input
             type="password"
             bind:value={password}
-            class="w-full rounded-lg border-gray-200 outline-none p-4 pr-12 text-sm shadow-sm"
+            class="w-full bg-zinc-800 text-gray-100 rounded-lg border-gray-200 outline-none p-4 pr-12 text-sm shadow-sm"
             placeholder="Enter password"
           />
         </div>
