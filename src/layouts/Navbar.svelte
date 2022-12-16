@@ -88,6 +88,7 @@
             <span>
               <a
                 href="/sign-in"
+                class:active={path === "/sign-in" || path === "/sign-up"}
                 class="block border-b-4 border-transparent p-6 text-zinc-500 hover:border-rose-700"
               >
                 <svg
@@ -96,7 +97,9 @@
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-6 h-6"
+                  class="w-6 h-6 {path === '/sign-in' || path === '/sign-up'
+                    ? 'text-rose-700'
+                    : 'text-zinc-500'}"
                 >
                   <path
                     stroke-linecap="round"
