@@ -21,6 +21,7 @@
 	"dependencies": {
 		"@macfja/svelte-persistent-store": "^2.2.1",
 		"@supabase/supabase-js": "^2.2.0",
+		"daisyui": "^2.45.0",
 		"svelte-file-dropzone": "^1.0.0"
 	}
 }
