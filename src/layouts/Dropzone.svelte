@@ -116,19 +116,10 @@
 </script>
 
 <main class="container mx-auto flex flex-col justify-center items-center ">
-  <button on:click={createBucket} class=" btn btn-primary">
-    Create Bucket
-  </button>
-  <input
-    type="file"
-    on:change={() => {
-      uploadFile(event);
-    }}
-  />
   <Dropzone
     accept="image/svg+xml"
     disableDefaultStyles={true}
-    containerClasses=" w-full  flex justify-center min-h-[300px] items-center bg-[#111111] border border-dashed border-rose-500 border-opacity-30 rounded-lg text-rose-500 text-xl font-semibold cursor-pointer"
+    containerClasses=" w-full  flex justify-center min-h-[300px] items-center bg-[#111111] border border-dashed border-primary border-opacity-30 rounded-lg text-primary text-xl font-semibold cursor-pointer"
     on:drop={handleFilesSelect}
   >
     Select or Drop SVGs here

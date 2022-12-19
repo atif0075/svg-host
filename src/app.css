@@ -3,9 +3,9 @@
 @tailwind utilities;
 @layer components {
   .active {
-    @apply text-rose-600 border-b-4 !border-rose-600;
+    @apply text-primary bg-[#2D2E31];
   }
 }
 *::selection {
-  @apply bg-rose-500 text-zinc-800;
+  @apply bg-primary text-zinc-800;
 }

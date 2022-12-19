@@ -7,12 +7,12 @@
     <div
       role="alert"
       class="rounded border-l-4 {toastDetails.type === 'error'
-        ? 'border-rose-500 bg-rose-50 '
+        ? 'border-primary bg-rose-50 '
         : 'border-green-500 bg-green-50 '} p-4"
     >
       <strong
         class="block font-medium {toastDetails.type === 'error'
-          ? 'text-rose-700'
+          ? 'text-primary '
           : 'text-green-700'}"
       >
         {toastDetails.type === "error" ? "Error" : "Congratulations"}
@@ -20,7 +20,7 @@
 
       <p
         class="mt-2 text-sm max-w-sm {toastDetails.type === 'error'
-          ? 'text-rose-700'
+          ? 'text-primary '
           : 'text-green-700'}"
       >
         {toastDetails.msg}
@@ -42,7 +42,7 @@
     animation: fade 0.7s forwards;
   }
   .error {
-    @apply text-rose-500;
+    @apply text-primary;
   }
   .success {
     @apply text-green-500;

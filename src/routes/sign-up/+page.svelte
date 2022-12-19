@@ -61,7 +61,7 @@
 <main class=" min-h-screen ">
   <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-lg text-center">
-      <h1 class="text-2xl font-bold sm:text-3xl text-rose-500">
+      <h1 class="text-2xl font-bold sm:text-3xl text-primary">
         Sign up to create your account
       </h1>
     </div>
@@ -108,7 +108,7 @@
         <p class="text-sm text-gray-500">
           All ready have account?
           <a
-            class="underline hover:text-rose-500 duration-300 ease-in-out"
+            class="underline hover:text-primary duration-300 ease-in-out"
             href="/sign-in">Sign in</a
           >
         </p>
@@ -116,7 +116,7 @@
         <button
           type="button"
           on:click={submit}
-          class="ml-3 inline-block rounded-lg bg-rose-500 px-5 py-3 text-sm font-medium text-white"
+          class="ml-3 inline-block rounded-lg bg-primary px-5 py-3 text-sm font-medium text-white"
         >
           Sign up
         </button>
