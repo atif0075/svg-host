@@ -50,7 +50,7 @@
   <div class="drawer drawer-mobile">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col items-center justify-center">
-      <div class=" w-full px-2 min-h-screen">
+      <div class=" w-full px-2 min-h-screen relative">
         <slot />
       </div>
       <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"
