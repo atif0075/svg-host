@@ -23,6 +23,9 @@
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
+      options: {
+        redirectTo: "https://svg-hoster.vercel.app",
+      },
     });
     if (error) {
       isShow = true;
