@@ -12,8 +12,8 @@
       }
     });
   });
-  let email = "chatif476@gmail.com";
-  let password = "test1234";
+  let email = "";
+  let password = "";
   let isShow = false;
   let isError = false;
   let isLoading = false;

@@ -3,7 +3,8 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import Toaster from "../../components/Toaster.svelte";
-  let userList = [];
+  import { allUsers } from "../../lib/stores";
+
   let toastDetails = {
     show: false,
     msg: "",
@@ -11,23 +12,58 @@
   };
 
   onMount(async () => {
-    const { data, error } = await supabase.from("user").select();
-    if (error) {
-      toastDetails = {
-        show: true,
-        msg: error.message,
-        type: "error",
-      };
-      setTimeout(() => {
-        toastDetails = {
-          show: false,
-          msg: "",
-          type: "",
-        };
-      }, 4000);
-    } else {
-      userList = data;
-    }
+    // const { data, error } = await supabase.from("user").select();
+    // if (error) {
+    //   toastDetails = {
+    //     show: true,
+    //     msg: error.message,
+    //     type: "error",
+    //   };
+    //   setTimeout(() => {
+    //     toastDetails = {
+    //       show: false,
+    //       msg: "",
+    //       type: "",
+    //     };
+    //   }, 4000);
+    // } else {
+    //   allUsers = data;
+    //   console.log("data", data);
+    //   toastDetails = {
+    //     show: true,
+    //     msg: "Users loaded successfully",
+    //     type: "success",
+    //   };
+    //   setTimeout(() => {
+    //     toastDetails = {
+    //       show: false,
+    //       msg: "",
+    //       type: "",
+    //     };
+    //   }, 4000);
+    // }
+    // watch for realtime updates on * from the user table
+    const { data: realtimeData, error: realtimeError } = supabase
+      .from("user")
+      .on("INSERT", (payload) => {
+        console.log("realtimeData", payload);
+        allUsers = [...allUsers, payload.new];
+      })
+      .on("UPDATE", (payload) => {
+        console.log("realtimeData", payload);
+        allUsers = allUsers.map((user) => {
+          if (user.id === payload.new.id) {
+            return payload.new;
+          }
+          return user;
+        });
+      })
+      .on("DELETE", (payload) => {
+        console.log("realtimeData", payload);
+        allUsers = allUsers.filter((user) => user.id !== payload.old.id);
+      })
+      .subscribe();
+   
   });
 </script>
 
@@ -44,7 +80,7 @@
             <label>
               <input
                 on:change={(e) => {
-                  userList = userList.map((user) => {
+                  allUsers.map((user) => {
                     user.checked = e.target.checked;
                     return user;
                   });
@@ -62,7 +98,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each userList as user (user.id)}
+        <!-- {#each allUsers as user (user.id)}
           <tr>
             <th>
               <label>
@@ -84,7 +120,7 @@
                       src={user.avatar
                         ? user.avatar
                         : "https://app.supabase.com/img/supabase-logo.svg"}
-                      alt="Avatar Tailwind CSS Component"
+                      alt=""
                     />
                   </div>
                 </div>
@@ -105,7 +141,7 @@
               <button class="btn btn-ghost btn-xs">details</button>
             </th>
           </tr>
-        {/each}
+        {/each} -->
       </tbody>
     </table>
   </div>
