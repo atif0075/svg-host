@@ -2,16 +2,45 @@
   import "../app.css";
   import { page } from "$app/stores";
   import { isUser } from "../lib/stores";
+  import supabase from "../lib/supabaseClient";
   import { beforeUpdate } from "svelte";
+  import Toaster from "../components/Toaster.svelte";
+  import Loader from "../components/loader.svelte";
+
   let is_user;
   beforeUpdate(() => {
     isUser.subscribe((value) => {
       is_user = value;
     });
   });
-  let logOut = () => {
-    localStorage.removeItem("token");
-    isUser.set(false);
+  let toastDetails = {
+    show: false,
+    isError: false,
+    msg: "",
+  };
+  let isLoading = false;
+  let logOut = async () => {
+    isLoading = true;
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toastDetails = {
+        show: true,
+        isError: true,
+        msg: error.message,
+      };
+      isLoading = false;
+      setTimeout(() => {
+        toastDetails = {
+          show: false,
+          isError: false,
+          msg: "",
+        };
+      }, 2000);
+    } else {
+      localStorage.removeItem("token");
+      isUser.set(false);
+    }
+    isLoading = false;
   };
   let path;
   function getPath(currentPath) {
@@ -43,15 +72,25 @@
       name: "Register",
       path: "/sign-up",
     },
+    {
+      name: "Admin",
+      path: "/admin",
+    },
   ];
 </script>
 
+{#if toastDetails.show}
+  <Toaster {toastDetails} />
+{/if}
 <main class=" bg-neutral">
   <div class="drawer drawer-mobile">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col items-center justify-center">
       <div class=" w-full px-2 min-h-screen relative">
         <slot />
+        {#if isLoading}
+          <Loader />
+        {/if}
       </div>
       <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"
         >Open sidebar</label
@@ -94,9 +133,9 @@
         <label for="my-modal-4" class=" btn btn-neutral border border-zinc-600">
           <span> Cancel </span>
         </label>
-        <label for="my-modal-4" class=" btn btn-error ml-3">
-          <label for="my-modal-4" href="/" on:click={logOut}> Logout </label>
-        </label>
+        <button for="my-modal-4" on:click={logOut} class=" btn btn-error ml-3">
+          <label for="my-modal-4"> Logout </label>
+        </button>
       </div>
     </label>
   </label>
