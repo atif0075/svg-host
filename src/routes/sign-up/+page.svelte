@@ -44,7 +44,18 @@
         show: true,
         msg: "You have successfully signed up.Please check your email to verify your account.",
       };
-      setTimeout(() => {
+      console.log({
+        full_name,
+        email,
+        // uuid: data.user.id,
+      });
+
+      setTimeout(async () => {
+        await supabase.from("user").insert({
+          full_name: full_name,
+          email: email,
+          uuid: data.user.id,
+        });
         toastDetails = {
           show: false,
           msg: "",
