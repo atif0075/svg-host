@@ -23,9 +23,6 @@
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
-      options: {
-        redirectTo: "https://svg-hoster.vercel.app",
-      },
     });
     if (error) {
       isShow = true;
@@ -45,7 +42,6 @@
   let githubSignin = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
-      popup: true,
     });
     if (error) {
       isShow = true;
