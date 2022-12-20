@@ -1,9 +1,10 @@
 <script>
   import supabase from "$lib/supabaseClient";
-  import Toaster from "../../components/Toaster.svelte";
   import { goto } from "$app/navigation";
   import { isUser } from "$lib/stores";
   import { onMount } from "svelte";
+  import Alert from "../../components/alert.svelte";
+  import Loader from "../../components/loader.svelte";
   onMount(() => {
     isUser.subscribe((value) => {
       if (value) {
@@ -13,55 +14,45 @@
   });
   let email = "chatif476@gmail.com";
   let password = "test1234";
-  let toastDetails = {
-    show: false,
-    msg: "",
-    type: "",
-  };
+  let isShow = false;
+  let isError = false;
+  let isLoading = false;
+  let msg = "";
   const singin = async () => {
+    isLoading = true;
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) {
-      console.log(error);
-      toastDetails = {
-        type: "error",
-        show: true,
-        msg: error.message,
-      };
-      setTimeout(() => {
-        toastDetails = {
-          show: false,
-          msg: "",
-          type: "",
-        };
-      }, 4000);
+      isShow = true;
+      isError = true;
+      msg = error.message;
     } else {
-      console.log(data);
-      toastDetails = {
-        type: "success",
-        show: true,
-        msg: "You have successfully signed in.",
-      };
+      isShow = true;
+      isError = false;
+      msg = "You have successfully signed in.";
       setTimeout(() => {
-        toastDetails = {
-          show: false,
-          msg: "",
-          type: "",
-        };
         isUser.set(true);
         goto("/");
       }, 2000);
     }
+    isLoading = false;
+  };
+  let githubSignin = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+    });
   };
 </script>
 
 <svelte:head>
   <title>Svg Hoster - Signin</title>
 </svelte:head>
+{#if isLoading}
+  <Loader />
+{/if}
 
-<Toaster {toastDetails} />
 <main class=" min-h-screen ">
   <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-lg text-center">
@@ -113,6 +104,18 @@
           Sign in
         </button>
       </div>
+      <div>
+        <button
+          type="button"
+          on:click={githubSignin}
+          class="btn btn-neutral text-white w-full text-sm font-bold border border-gray-200 border-opacity-10"
+        >
+          Sign in with Github
+        </button>
+      </div>
+      {#if isShow}
+        <Alert {isError} {msg} />
+      {/if}
     </div>
   </div>
 </main>
