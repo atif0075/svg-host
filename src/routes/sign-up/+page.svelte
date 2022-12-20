@@ -1,12 +1,13 @@
 <script>
   import supabase from "$lib/supabaseClient";
   import Toaster from "../../components/Toaster.svelte";
+  import { goto } from "$app/navigation";
   import { isUser } from "$lib/stores";
   import { beforeUpdate } from "svelte";
   beforeUpdate(() => {
     isUser.subscribe((value) => {
       if (value) {
-        window.location.href = "/";
+        goto("/");
       }
     });
   });
@@ -49,7 +50,7 @@
           msg: "",
           type: "",
         };
-        window.location.href = "/sign-in";
+        goto("/sign-in");
       }, 4000);
     }
   };

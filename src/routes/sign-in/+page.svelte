@@ -1,17 +1,18 @@
 <script>
   import supabase from "$lib/supabaseClient";
   import Toaster from "../../components/Toaster.svelte";
+  import { goto } from "$app/navigation";
   import { isUser } from "$lib/stores";
   import { onMount } from "svelte";
   onMount(() => {
     isUser.subscribe((value) => {
       if (value) {
-        window.location.href = "/";
+        goto("/");
       }
     });
   });
-  let email = "";
-  let password = "";
+  let email = "chatif476@gmail.com";
+  let password = "test1234";
   let toastDetails = {
     show: false,
     msg: "",
@@ -24,7 +25,6 @@
     });
     if (error) {
       console.log(error);
-      // do a proper error handling
       toastDetails = {
         type: "error",
         show: true,
@@ -38,6 +38,7 @@
         };
       }, 4000);
     } else {
+      console.log(data);
       toastDetails = {
         type: "success",
         show: true,
@@ -50,7 +51,7 @@
           type: "",
         };
         isUser.set(true);
-        window.location.href = "/";
+        goto("/");
       }, 2000);
     }
   };
