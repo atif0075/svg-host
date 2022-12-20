@@ -1,6 +1,5 @@
 <script>
   import "../app.css";
-  import Navbar from "../layouts/Sidebar.svelte";
   import { page } from "$app/stores";
   import { isUser } from "../lib/stores";
   import { beforeUpdate } from "svelte";
@@ -33,6 +32,10 @@
       path: "/public-svgs",
     },
     {
+      name: "Settings",
+      path: "/settings",
+    },
+    {
       name: "Login",
       path: "/sign-in",
     },
@@ -47,12 +50,11 @@
   <div class="drawer drawer-mobile">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col items-center justify-center">
-      <!-- Page content here -->
       <div class=" w-full px-2 min-h-screen">
         <slot />
       </div>
       <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"
-        >Open drawer</label
+        >Open sidebar</label
       >
     </div>
     <div class="drawer-side">

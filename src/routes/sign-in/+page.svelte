@@ -107,7 +107,7 @@
         <button
           type="button"
           on:click={singin}
-          class="ml-3 inline-block rounded-lg bg-primary px-5 py-3 text-sm font-medium text-white"
+          class="btn btn-primary text-sm font-bold text-neutral"
         >
           Sign in
         </button>
