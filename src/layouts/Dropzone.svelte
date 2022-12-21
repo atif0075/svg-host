@@ -115,24 +115,18 @@
   };
 </script>
 
-<main class="container mx-auto flex flex-col justify-center items-center ">
+<main
+  class="container mx-auto min-h-screen flex flex-col justify-center items-center "
+>
   <Dropzone
     accept="image/svg+xml"
     disableDefaultStyles={true}
-    containerClasses=" w-full  flex justify-center min-h-[300px] items-center bg-[#111111] border border-dashed border-primary border-opacity-30 rounded-lg text-primary text-xl font-semibold cursor-pointer"
+    containerClasses=" w-full min-h-screen  flex justify-center items-center bg-[#111111] border border-dashed border-primary border-opacity-30 rounded-lg text-primary text-xl font-semibold cursor-pointer"
     on:drop={handleFilesSelect}
   >
     Select or Drop SVGs here
   </Dropzone>
-  <ol class=" py-5 w-full  grid lg:grid-cols-4 gap-5 ">
-    {#each files.accepted as item}
-      <li
-        class=" w-full py-4 px-2 text-rose-400  rounded-lg my-2 bg-zinc-800 border border-rose-300 border-opacity-30"
-      >
-        {item.name.length > 30 ? item.name.slice(0, 30) + "...." : item.name}
-      </li>
-    {/each}
-  </ol>
+
   {#if isError}
     <Toaster {toastDetails} />
   {/if}
