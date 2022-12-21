@@ -2,6 +2,7 @@
   import Dropzone from "../layouts/Dropzone.svelte";
   import { isSvgPublic } from "$lib/stores";
   import { onMount } from "svelte";
+  import { imgVal } from "$lib/stores";
   let checked;
   onMount(() => {
     isSvgPublic.subscribe((value) => {
@@ -51,11 +52,7 @@
         <div
           class=" w-full min-h-[200px] border rounded-lg border-gray-100 border-opacity-20 p-5 flex justify-center items-center"
         >
-          <img
-            class=" w-28 h-28"
-            src="https://app.supabase.com/img/supabase-logo.svg"
-            alt=""
-          />
+          <img class=" w-28 h-28" src={imgVal} alt="" />
         </div>
       </div>
       <div class=" py-2">

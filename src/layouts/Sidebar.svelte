@@ -10,7 +10,9 @@
   });
   let logOut = () => {
     localStorage.removeItem("token");
-    isUser.set(false);
+    isUser.subscribe((value) => {
+      is_user = value;
+    });
   };
 
   let path;
@@ -20,9 +22,7 @@
   $: getPath($page.url.pathname);
 </script>
 
-<main>
- 
-</main>
+<main />
 
 <style>
 </style>

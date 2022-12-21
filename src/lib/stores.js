@@ -6,5 +6,8 @@ let user = persistCookie(writable(), "user");
 let token = persistCookie(writable(""), "token");
 let isSvgPublic = persistCookie(writable(true), "is-svg-public");
 let allUsers = persistCookie(writable([]), "all-users");
-
-export { isUser, user, token, isSvgPublic, allUsers };
+let imgVal = persistCookie(
+  writable("https://app.supabase.com/img/supabase-logo.svg"),
+  "img-val"
+);
+export { isUser, user, token, isSvgPublic, allUsers, imgVal };

@@ -122,10 +122,8 @@
           <li
             class="active:bg-[#2D2E31] rounded-lg my-1 {is_user &&
             route.name === 'Register'
-              ? 'disabled pointer-events-none'
-              : ''} {is_user && route.name === 'Login'
-              ? 'disabled pointer-events-none'
-              : ''}"
+              ? 'hidden'
+              : ''} {is_user && route.name === 'Login' ? 'hidden' : ''}"
           >
             <a href={route.path} class:active={path === route.path}>
               {route.name}

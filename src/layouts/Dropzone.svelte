@@ -2,6 +2,7 @@
   import Dropzone from "svelte-file-dropzone";
   import Toaster from "../components/Toaster.svelte";
   import supabase from "$lib/supabaseClient";
+  import { imgVal } from "../lib/stores";
   let isError = false;
   let toastDetails = {
     show: true,
@@ -83,7 +84,14 @@
     const { acceptedFiles, fileRejections } = e.detail;
     files.accepted = [...files.accepted, ...acceptedFiles];
     files.rejected = [...files.rejected, ...fileRejections];
+    files.accepted = files.accepted.slice(0, 1);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imgVal = e.target.result; 
+    };
+    reader.readAsDataURL(files.accepted[0]);
   }
+
   let uploadFile = async (event) => {
     const svgFile = event.target.files[0];
     const { data, error } = await supabase.storage
@@ -115,13 +123,15 @@
   };
 </script>
 
+<img src={imgVal} class=" w-10" alt="name" />
 <main
   class="container mx-auto min-h-screen flex flex-col justify-center items-center "
 >
   <Dropzone
     accept="image/svg+xml"
     disableDefaultStyles={true}
-    containerClasses=" w-full min-h-screen  flex justify-center items-center bg-[#111111] border border-dashed border-primary border-opacity-30 rounded-lg text-primary text-xl font-semibold cursor-pointer"
+    maxFiles={1}
+    containerClasses=" w-full min-h-screen  flex justify-center items-center bg-[#2e2e2e] border border-dashed border-primary border-opacity-30 rounded-lg text-primary text-xl font-semibold cursor-pointer"
     on:drop={handleFilesSelect}
   >
     Select or Drop SVGs here
