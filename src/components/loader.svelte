@@ -1,5 +1,5 @@
 <main
-  class=" absolute top-0 left-0 w-full h-screen bg-zinc-900 bg-opacity-60 flex justify-center items-center"
+  class="w-full h-full absolute z-10 top-0 left-0 bg-zinc-900 bg-opacity-60 flex justify-center items-center"
 >
   <svg
     class=" text-primary"

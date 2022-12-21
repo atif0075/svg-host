@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import { isUser } from "../lib/stores";
   import supabase from "../lib/supabaseClient";
-  import { beforeUpdate } from "svelte";
+  import { beforeUpdate, onMount } from "svelte";
   import Toaster from "../components/Toaster.svelte";
   import Loader from "../components/loader.svelte";
 
@@ -11,6 +11,13 @@
   beforeUpdate(() => {
     isUser.subscribe((value) => {
       is_user = value;
+    });
+  });
+  onMount(() => {
+    isUser.subscribe((value) => {
+      if (value) {
+        $page.url = "/";
+      }
     });
   });
   let toastDetails = {
@@ -99,6 +106,17 @@
     <div class="drawer-side">
       <label for="my-drawer-2" class="drawer-overlay" />
       <ul class="menu p-4 w-80  bg-base-100 text-base-content">
+        {#if is_user}
+          <div class="flex justify-center flex-col items-center">
+            <div class="avatar online">
+              <div class="w-24 rounded-full">
+                <img src="https://placeimg.com/192/192/people" alt="" />
+              </div>
+            </div>
+            <h1 class="font-bold text-xl py-1">M Atif</h1>
+            <p>chatif476@gmail.com</p>
+          </div>
+        {/if}
         {#each routes as route}
           <li
             class="active:bg-[#2D2E31] rounded-lg my-1 {is_user &&

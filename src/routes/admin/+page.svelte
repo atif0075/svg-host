@@ -1,8 +1,9 @@
 <script>
   import supabase from "../../lib/supabaseClient";
   import { onMount } from "svelte";
-  import { goto } from "$app/navigation";
   import Toaster from "../../components/Toaster.svelte";
+  import Loader from "../../components/loader.svelte";
+  let isLoading = false;
   let userList = [];
   let toastDetails = {
     show: false,
@@ -10,10 +11,8 @@
     type: "",
   };
 
- 
-
-
   onMount(async () => {
+    isLoading = true;
     const { data, error } = await supabase.from("user").select();
     if (error) {
       toastDetails = {
@@ -44,27 +43,111 @@
         };
       }, 4000);
     }
+    isLoading = false;
   });
+  let deleteUser = async (id) => {
+    isLoading = true;
+    supabase
+      .from("user")
+      .delete()
+      .eq("id", id)
+      .then((res) => {
+        console.log("res", res);
+        if (res.error) {
+          isLoading = false;
+          toastDetails = {
+            show: true,
+            msg: res.error.message,
+            type: "error",
+          };
+          setTimeout(() => {
+            toastDetails = {
+              show: false,
+              msg: "",
+              type: "",
+            };
+          }, 4000);
+        } else {
+          isLoading = false;
+          toastDetails = {
+            show: true,
+            msg: "User deleted successfully",
+            type: "success",
+          };
+          setTimeout(() => {
+            toastDetails = {
+              show: false,
+              msg: "",
+              type: "",
+            };
+          }, 4000);
+          userList = userList.filter((u) => u.id !== id);
+          isLoading = false;
+        }
+      });
+  };
+  let selectAll = (e) => {
+    userList = userList.map((user) => {
+      user.checked = e.target.checked;
+      return user;
+    });
+  };
+  let isTableLoading = false;
+  let filterRes = async (e) => {
+    isTableLoading = true;
+    await supabase
+      .from("user")
+      .select()
+      .ilike("full_name", `%${e.target.value}%`)
+      .then((res) => {
+        console.log("res", res);
+        if (res.error) {
+          isTableLoading = false;
+          toastDetails = {
+            show: true,
+            msg: res.error.message,
+            type: "error",
+          };
+          setTimeout(() => {
+            toastDetails = {
+              show: false,
+              msg: "",
+              type: "",
+            };
+          }, 4000);
+        } else {
+          isTableLoading = false;
+          userList = res.data;
+        }
+      });
+  };
+  isTableLoading = false;
 </script>
 
 {#if toastDetails.show}
-  <Toaster {toastDetails} />
+  <Toaster {toastDetails}  />
 {/if}
 <main class=" p-5">
-  <h1 class=" font-semibold text-2xl pb-2">All Users</h1>
-  <div class="overflow-x-auto w-full">
+  <div class=" py-2">
+    <h1 class=" font-semibold text-2xl pb-2">All Users</h1>
+    <input
+      type="text"
+      placeholder="Type here"
+      on:keyup={(e) => filterRes(e)}
+      class="input input-bordered input-success w-full max-w-xs"
+    />
+  </div>
+  <div class="overflow-x-auto w-full relative z-[1]">
+    {#if isTableLoading}
+      <Loader />
+    {/if}
     <table class="table w-full">
       <thead>
         <tr>
           <th>
             <label>
               <input
-                on:change={(e) => {
-                  userList = userList.map((user) => {
-                    user.checked = e.target.checked;
-                    return user;
-                  });
-                }}
+                on:change={(e) => selectAll(e)}
                 type="checkbox"
                 class="checkbox"
               />
@@ -74,7 +157,7 @@
           <th>Name</th>
           <th>Email</th>
           <th>UUID</th>
-          <th />
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -108,7 +191,7 @@
             </td>
             <td>
               <div>
-                <div class="font-bold">
+                <div class="font-semibold text-primary">
                   {user.full_name}
                 </div>
               </div>
@@ -118,7 +201,9 @@
               {user.uuid}
             </td>
             <th>
-              <button class="btn btn-ghost btn-xs">details</button>
+              <button on:click={deleteUser(user.id)} class="badge badge-error"
+                >Delete</button
+              >
             </th>
           </tr>
         {/each}
@@ -126,3 +211,6 @@
     </table>
   </div>
 </main>
+{#if isLoading}
+  <Loader />
+{/if}
